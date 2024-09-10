@@ -9,15 +9,15 @@
 <p th:if="${etudiants==null }"></p>
 <ul th:if="${!etudiants.isEmpty() && etudiants!=null}">
   <li th:each="e : ${etudiants}">
-    <a th:href="@{/detail/{id}(id=${e.getKey()})}">
-      <span th:text="${e.getValue().getNom()}"> </span>
-      <span th:text="${e.getValue().getPrenom()}"></span>
+    <a th:href="@{/detail/{id}(id=${e.getId()})}">
+      <span th:text="${e.getNom()}"> </span>
+      <span th:text="${e.getPrenom()}"></span>
     </a>
   </li>
 </ul>
 
-<form action="search">
-  <input placeholder="Search" aria-label="Search">
+<form th:action="@{/search}">
+  <input placeholder="Search" aria-label="Search" name="search">
   <button>Rechercher</button>
 </form>
 

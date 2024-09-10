@@ -30,7 +30,7 @@ public class EtudiantController {
 
     @RequestMapping("/listeEtudiant")
     public String listEtudiant(Model model) {
-        model.addAttribute("etudiants",etudiantService.getEtudiants() );
+        model.addAttribute("etudiants",etudiantService.getAllStudents() );
         return "ListeEtudiant";
     }
 
@@ -42,14 +42,14 @@ public class EtudiantController {
 
     @PostMapping("/inscription")
     public String postInscription(@ModelAttribute Etudiant etudiant, Model model) {
-        Etudiant et = Etudiant.builder().id(UUID.randomUUID()).nom(etudiant.getNom()).age(etudiant.getAge()).adresse(etudiant.getAdresse()).prenom(etudiant.getPrenom()).build(); ;
-        etudiantService.createEtudiant(et.getNom(),et.getPrenom(),et.getAdresse(),et.getAge());
-        model.addAttribute("etudiant", etudiant);
+        Etudiant et = etudiantService.createEtudiant(etudiant.getNom(),etudiant.getPrenom(),etudiant.getAdresse(),etudiant.getAge());
+        model.addAttribute("etudiant", et);
         return listEtudiant(model);
     }
 
     @RequestMapping("/detail/{id}")
     public String detail(@PathVariable("id") UUID id, Model model) {
+        System.out.println(etudiantService.getEtudiantById(id));
         Etudiant etudiant = etudiantService.getEtudiantById(id);
         model.addAttribute("etudiant", etudiant);
         return "DetailEtudiant";
@@ -57,12 +57,13 @@ public class EtudiantController {
 
     @RequestMapping("/search")
     public String showStudents(@RequestParam(name = "search", required = false) String search, Model model){
-        if (search == null) {
-            model.addAttribute("students", etudiantService.getAllStudents());
+        if (search == null || search.isEmpty()) {
+            model.addAttribute("etudiants", etudiantService.getAllStudents());
         } else {
-            model.addAttribute("students", etudiantService.searchStudents(search));
+            System.out.println(etudiantService.searchStudents(search));
+            model.addAttribute("etudiants", etudiantService.searchStudents(search));
         }
-        return listEtudiant(model);
+        return "ListeEtudiant";
     }
 
 }

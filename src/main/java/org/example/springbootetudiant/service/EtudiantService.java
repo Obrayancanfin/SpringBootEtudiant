@@ -11,7 +11,7 @@ public class EtudiantService {
 
     private Map< UUID ,Etudiant> etudiants= new HashMap<>();
 
-    public void createEtudiant(String nom, String prenom, String adresse, int age) {
+    public Etudiant createEtudiant(String nom, String prenom, String adresse, int age) {
         Etudiant et = Etudiant.builder()
                 .id(UUID.randomUUID())
                 .age(age)
@@ -19,9 +19,7 @@ public class EtudiantService {
                 .prenom(prenom)
                 .adresse(adresse).build();
         etudiants.put(et.getId(), et);
-    }
-    public Map<UUID, Etudiant> getEtudiants() {
-        return etudiants;
+        return et;
     }
 
     public Etudiant createEtudiant(){
