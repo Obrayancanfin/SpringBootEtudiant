@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste d'etudiant</title>
+</head>
+<body>
+<h1>Liste des etudiants</h1>
+<p th:if="${etudiants==null }"></p>
+<ul th:if="${!etudiants.isEmpty() && etudiants!=null}">
+  <li th:each="e : ${etudiants}">
+    <a th:href="@{/detail/{id}(id=${e.getKey()})}">
+      <span th:text="${e.getValue().getNom()}"> </span>
+      <span th:text="${e.getValue().getPrenom()}"></span>
+    </a>
+  </li>
+</ul>
+
+<form action="search">
+  <input placeholder="Search" aria-label="Search">
+  <button>Rechercher</button>
+</form>
+
+<a th:href="@{/inscription}" >Inscription</a>
+</body>
+</html>
